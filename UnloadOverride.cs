@@ -15,25 +15,19 @@ public class UnloadOverride : PartModule
 	[KSPField(guiActive = true, guiName = "Unload override is ")]
 	public string overrideState = "Disabled";
 
-	public override void OnStart (StartState state)
-	{
-		print ("default landed unload distance : " + vessel.distanceLandedPackThreshold);
-		print ("default unload distance : " + vessel.distancePackThreshold);
-	}
-
 	[KSPEvent(guiActive = true, guiName = "Toggle Override", guiActiveUnfocused = true, unfocusedRange = 0)]
 	public void toggleUnloadOverride ()
 	{
 		overrideControl = !overrideControl;
 	}
 
-	[KSPAction("Toggle")]
+	[KSPAction("Toggle Unload")]
 	public void ToggleAction(KSPActionParam param)
 	{
 		overrideControl = !overrideControl;
 	}
 
-	public void FixedUpdate ()
+	public void FixedUpdate()
 	{
 		if (HighLogic.LoadedSceneIsFlight == true) {
 			if (overrideControl == true) {
@@ -50,5 +44,11 @@ public class UnloadOverride : PartModule
 				Vessel.loadDistance = 2500;
 			}
 		}
+	}
+
+	public override void OnStart(StartState state)
+	{
+		print ("default landed unload distance : " + vessel.distanceLandedPackThreshold);
+		print ("default unload distance : " + vessel.distancePackThreshold);
 	}
 }
